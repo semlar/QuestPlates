@@ -1,7 +1,7 @@
 ## Interface: 80300
 ## Title: QuestPlates
 ## Notes: Adds quest progress to nameplates
-## Version: 8.3.0.1
+## Version: 8.3.0.2
 ## Author: Semlar
 ## SavedVariables: QuestPlateSettings
 semlib\semlib.xml
