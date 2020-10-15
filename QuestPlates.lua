@@ -291,9 +291,9 @@ local function UpdateQuestIcon(plate, unitID)
 					end
 				end
 			else
-				local _, _, _, _, _, _, _, questID = GetQuestLogTitle(questLogIndex)
+				local info = C_QuestLog.GetInfo(questLogIndex)
 				for i = 1, GetNumQuestLeaderBoards(questLogIndex) or 0 do
-					local text, objectiveType, finished = GetQuestObjectiveInfo(questID, i, false)
+					local text, objectiveType, finished = GetQuestObjectiveInfo(info.questID, i, false)
 					if not finished and (objectiveType == 'item' or objectiveType == 'object') then
 						Q.lootIcon:Show()
 					end
