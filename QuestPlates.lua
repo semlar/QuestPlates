@@ -65,7 +65,7 @@ do
 	end
 
 	function E:QUEST_ACCEPTED(questLogIndex, questID, ...)
-		if questID and IsQuestTask(questID) then
+		if questID and C_QuestLog.IsQuestTask(questID) then
 			-- print('TASK_QUEST_ACCEPTED', questID, questLogIndex, GetQuestLogTitle(questLogIndex))
 			local questName = C_TaskQuest.GetQuestInfoByQuestID(questID)
 			if questName then
@@ -291,9 +291,9 @@ local function UpdateQuestIcon(plate, unitID)
 					end
 				end
 			else
-				local _, _, _, _, _, _, _, questID = GetQuestLogTitle(questLogIndex)
+				local info = C_QuestLog.GetInfo(questLogIndex)
 				for i = 1, GetNumQuestLeaderBoards(questLogIndex) or 0 do
-					local text, objectiveType, finished = GetQuestObjectiveInfo(questID, i, false)
+					local text, objectiveType, finished = GetQuestObjectiveInfo(info.questID, i, false)
 					if not finished and (objectiveType == 'item' or objectiveType == 'object') then
 						Q.lootIcon:Show()
 					end
@@ -329,15 +329,15 @@ end
 QuestObjectiveStrings = {}
 local function CacheQuestIndexes()
 	wipe(QuestLogIndex)
-	for i = 1, GetNumQuestLogEntries() do
+	for i = 1, C_QuestLog.GetNumQuestLogEntries() do	
 		-- for i = 1, GetNumQuestLogEntries() do if not select(4,GetQuestLogTitle(i)) and select(11,GetQuestLogTitle(i)) then QuestLogPushQuest(i) end end
-		local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory = GetQuestLogTitle(i)
-		if not isHeader then
-			QuestLogIndex[title] = i
+		local info = C_QuestLog.GetInfo(i)		
+		if not info.isHeader then
+			QuestLogIndex[info.title] = i
 			for objectiveID = 1, GetNumQuestLeaderBoards(i) or 0 do
-				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(questID, objectiveID, false)
+				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(info.questID, objectiveID, false)
 				if objectiveText then
-					QuestObjectiveStrings[ title .. objectiveText ] = {questID, objectiveID}
+					QuestObjectiveStrings[ info.title .. objectiveText ] = {info.questID, objectiveID}
 				end
 			end
 		end
