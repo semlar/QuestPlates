@@ -8,6 +8,7 @@
 --   /run QuestPlateSettings.AnchorPoint = 'LEFT'; QuestPlateSettings.RelativeTo = 'RIGHT'
 -- To change to an alternative icon style type this:
 --   /run QuestPlateSettings.IconStyle = 1
+
 -- After changing your settings, you can type /reload to save and apply them
 -- If you wish to wipe out any changes you've made and return to the default settings, you can type:
 --   /run QuestPlateSettings = nil
@@ -182,7 +183,7 @@ function E:OnNewPlate(f, plate)
 		icon:SetTexture('Interface/QuestFrame/AutoQuest-Parts')
 	elseif QuestPlateSettings.IconStyle == 1 then 
 		icon:SetVertexColor(0,0,0,0.5)
-		SetPortraitToTexture(icon, 'Interface/Tooltips/UI-Tooltip-Background')
+		icon:SetTexture('Interface/Tooltips/UI-Tooltip-Background')
 		local mask = frame:CreateMaskTexture()
 		mask:SetTexture([[Interface\CHARACTERFRAME\TempPortraitAlphaMask]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 		mask:SetAllPoints(icon)
