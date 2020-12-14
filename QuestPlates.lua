@@ -374,7 +374,7 @@ end
 -- Reanchor any existing nameplate icons after settings load
 function E:ADDON_LOADED(loadedAddon)
 	if loadedAddon == addonName then
-		for plate, f in pairs(addon:GetActiveNameplates()) do
+		for plate, f in pairs(addon:GetAllNameplates()) do
 			local frame = QuestPlates[plate]
 			if frame then
 				frame.jellybean:ClearAllPoints()

@@ -7,8 +7,13 @@ local E = addon:Eve()
 local Nameplates = {} -- [plate] = f, holds all nameplate frames
 local ActiveNameplates = {} -- [plate] = f, only stores currently visible nameplates
 local GUIDs = {} -- [guid] = plate
+
 function addon:GetActiveNameplates()
 	return ActiveNameplates
+end
+
+function addon:GetAllNameplates()
+	return Nameplates
 end
 
 function addon:GetFrameFromNameplate(plate)
@@ -38,7 +43,7 @@ function E:NAME_PLATE_CREATED(plate)
 	local f = CreateFrame('frame', nil, plate)
 	f:SetAllPoints()
 	Nameplates[plate] = f
-	plate._frame = f
+	-- plate._frame = f
 	E('OnNewPlate', f, plate)
 end
 
