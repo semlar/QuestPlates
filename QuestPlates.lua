@@ -27,7 +27,7 @@ QuestPlateSettings = {
 -- END OF SETTINGS
 --------------------
 
-local _, addon = ...
+local addonName, addon = ...
 
 local E = addon:Eve()
 
@@ -369,4 +369,19 @@ end
 
 function E:PLAYER_ENTERING_WORLD()
 	E:RegisterEvent('QUEST_LOG_UPDATE')
+end
+
+-- Reanchor any existing nameplate icons after settings load
+function E:ADDON_LOADED(loadedAddon)
+	if loadedAddon == addonName then
+		for plate, f in pairs(addon:GetActiveNameplates()) do
+			local frame = QuestPlates[plate]
+			if frame then
+				frame.jellybean:ClearAllPoints()
+				frame.jellybean:SetPoint(QuestPlateSettings.AnchorPoint or 'RIGHT', frame, QuestPlateSettings.RelativeTo or 'LEFT', (QuestPlateSettings.OffsetX or 0) / (QuestPlateSettings.IconScale or 1), (QuestPlateSettings.OffsetY or 0) / (QuestPlateSettings.IconScale or 1))
+				frame:SetScale(QuestPlateSettings.IconScale or 1)
+			end
+		end	
+		self:UnregisterEvent("ADDON_LOADED")
+	end
 end
