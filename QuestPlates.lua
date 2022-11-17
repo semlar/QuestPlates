@@ -31,9 +31,9 @@ local addonName, addon = ...
 
 local E = addon:Eve()
 
-function E:VARIABLES_LOADED()
-	SetCVar('showQuestTrackingTooltips', '1') -- Required for this addon to function, don't turn this off
-end
+-- function E:VARIABLES_LOADED()
+	-- SetCVar('showQuestTrackingTooltips', '1') -- Required for this addon to function, don't turn this off
+-- end
 
 local TextureAtlases = {
 	['item'] = 'Banker', -- bag icon, you have to loot something for this quest
@@ -94,71 +94,69 @@ do
 end
 
 local OurName = UnitName('player')
-local QuestPlateTooltip = CreateFrame('GameTooltip', 'QuestPlateTooltip', nil, 'GameTooltipTemplate')
+--local QuestPlateTooltip = CreateFrame('GameTooltip', 'QuestPlateTooltip', nil, 'GameTooltipTemplate')
 QuestLogIndex = {} -- [questName] = questLogIndex, this is to "quickly" look up quests from its name in the tooltip
 
-local function GetQuestProgress(unitID)
-	--if not QuestPlatesEnabled or not name then return end
-	--local guid = GUIDs[name]
-	--local guid = unitID and UnitGUID(unitID)
-	--if not guid then return end
-	
-	QuestPlateTooltip:SetOwner(WorldFrame, 'ANCHOR_NONE')
-	--QuestPlateTooltip:SetHyperlink('unit:' .. guid)
-	QuestPlateTooltip:SetUnit(unitID)
-	
+function GetQuestProgress(unitID)
+	-- TODO: Refactor this mess
+	if not C_QuestLog.UnitIsRelatedToActiveQuest(unitID) then return end
+
+	local tooltipData = C_TooltipInfo.GetUnit(unitID)
 	local progressGlob -- concatenated glob of quest text
 	local questType -- 1 for player, 2 for group
 	local objectiveCount = 0
 	local questTexture -- if usable item
 	local questLogIndex -- should generally be set, index usable with questlog functions
 	local questID
-	for i = 3, QuestPlateTooltip:NumLines() do
-		local str = _G['QuestPlateTooltipTextLeft' .. i]
-		local text = str and str:GetText()
-		if not text then return end
-		questID = questID or ActiveWorldQuests[ text ]
-		--local playerName, progressText = strmatch(text, '^(.-)(.+)$') -- nil or '' if 1 is missing but 2 is there
-		local playerName = ""
-		local progressText = text
-		local textOffset = select(4, str:GetPoint(2)) or 0
-		local isQuestText = textOffset > 27 and textOffset < 29 -- Threat text is 30, Quest text is 28?
-		
-		-- todo: if multiple entries are present, ONLY read the quest objectives for the player
-		-- if a name is listed in the pattern then we must be in a group
-		if playerName and playerName ~= '' and playerName ~= OurName then -- quest is for another group member
-			if not questType then
-				questType = 2
-			end
-		else
-			if isQuestText then
-				local x, y = strmatch(progressText, '(%d+)/(%d+)')
-				if x and y then
-					local numLeft = y - x
-					if numLeft > objectiveCount then -- track highest number of objectives
-						objectiveCount = numLeft
+	for i = 3, #tooltipData.lines do
+		local line = tooltipData.lines[i]
+		TooltipUtil.SurfaceArgs(line)
+
+		if line.type == 17 and line.id then -- Tooltip line is a quest header..?
+			--if not text then return end
+			local text, objectiveType, finished = GetQuestObjectiveInfo(line.id, 1, false)
+			questID = questID or line.id or text and ActiveWorldQuests[ text ]
+			--local playerName, progressText = strmatch(text, '^(.-)(.+)$') -- nil or '' if 1 is missing but 2 is there
+			local playerName = ""
+			local progressText = text
+			local isQuestText = not not progressText
+			
+			-- todo: if multiple entries are present, ONLY read the quest objectives for the player
+			-- if a name is listed in the pattern then we must be in a group
+			if playerName and playerName ~= '' and playerName ~= OurName then -- quest is for another group member
+				if not questType then
+					questType = 2
+				end
+			else
+				if isQuestText then
+					local x, y = strmatch(progressText, '(%d+)/(%d+)')
+					if x and y then
+						local numLeft = y - x
+						if numLeft > objectiveCount then -- track highest number of objectives
+							objectiveCount = numLeft
+						end
+					else
+						local progress = tonumber(strmatch(progressText, '([%d%.]+)%%')) -- tooltip actually contains progress %
+						if progress and progress <= 100 then
+							local questID = ActiveWorldQuests[ text ] -- not a guarantee
+							local questType = 3
+							return text, questType, ceil(100 - progress), questID
+						end
 					end
-				else
-					local progress = tonumber(strmatch(progressText, '([%d%.]+)%%')) -- tooltip actually contains progress %
-					if progress and progress <= 100 then
-						local questID = ActiveWorldQuests[ text ] -- not a guarantee
-						local questType = 3
+					--local x, y = strmatch(progressText, '(%d+)/(%d+)$')
+					if not x or (x and y and x ~= y) then
+						progressGlob = progressGlob and progressGlob .. '\n' .. progressText or progressText
+					end
+				elseif ActiveWorldQuests[text] then
+					local questID = ActiveWorldQuests[ text ]
+					local progress = C_TaskQuest.GetQuestProgressBarInfo(questID) -- or GetQuestProgressBarPercent(questID) -- not sure what the difference is between these functions
+					if progress then
+						local questType = 3 -- progress bar
 						return text, questType, ceil(100 - progress), questID
 					end
+				elseif QuestLogIndex[text] then
+					questLogIndex = QuestLogIndex[text]
 				end
-				--local x, y = strmatch(progressText, '(%d+)/(%d+)$')
-				if not x or (x and y and x ~= y) then
-					progressGlob = progressGlob and progressGlob .. '\n' .. progressText or progressText
-				end
-			elseif ActiveWorldQuests[text] then
-				local questID = ActiveWorldQuests[ text ]
-				local progress = C_TaskQuest.GetQuestProgressBarInfo(questID) -- or GetQuestProgressBarPercent(questID) -- not sure what the difference is between these functions
-				if progress then
-					local questType = 3 -- progress bar
-					return text, questType, ceil(100 - progress), questID
-				end
-			elseif QuestLogIndex[text] then
-				questLogIndex = QuestLogIndex[text]
 			end
 		end
 	end
