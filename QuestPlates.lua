@@ -290,10 +290,12 @@ local function UpdateQuestIcon(plate, unitID)
 				end
 			else
 				local info = C_QuestLog.GetInfo(questLogIndex)
-				for i = 1, GetNumQuestLeaderBoards(questLogIndex) or 0 do
-					local text, objectiveType, finished = GetQuestObjectiveInfo(info.questID, i, false)
-					if not finished and (objectiveType == 'item' or objectiveType == 'object') then
-						Q.lootIcon:Show()
+				if info then
+					for i = 1, GetNumQuestLeaderBoards(questLogIndex) or 0 do
+						local text, objectiveType, finished = GetQuestObjectiveInfo(info.questID, i, false)
+						if not finished and (objectiveType == 'item' or objectiveType == 'object') then
+							Q.lootIcon:Show()
+						end
 					end
 				end
 			end
@@ -330,7 +332,7 @@ local function CacheQuestIndexes()
 	for i = 1, C_QuestLog.GetNumQuestLogEntries() do	
 		-- for i = 1, GetNumQuestLogEntries() do if not select(4,GetQuestLogTitle(i)) and select(11,GetQuestLogTitle(i)) then QuestLogPushQuest(i) end end
 		local info = C_QuestLog.GetInfo(i)		
-		if not info.isHeader then
+		if info and not info.isHeader then
 			QuestLogIndex[info.title] = i
 			for objectiveID = 1, GetNumQuestLeaderBoards(i) or 0 do
 				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(info.questID, objectiveID, false)
