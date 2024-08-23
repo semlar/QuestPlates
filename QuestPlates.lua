@@ -1,6 +1,15 @@
 --------------------
 -- ICON SETTINGS
+-- Settings can be referenced by typing "QuestPlateSettings." followed by the name of the setting.
+-- For example, to move the icon 10 pixels down, you can type the following into the chat:
+--   /run QuestPlateSettings.OffsetY = -10
+-- To move the icon from the left to the right of the nameplate, you can type this:
+--   /run QuestPlateSettings.AnchorPoint = 'LEFT'; QuestPlateSettings.RelativeTo = 'RIGHT'
 
+-- After changing your settings, you can type /reload to save and apply them
+-- If you wish to wipe out any changes you've made and return to the default settings, you can type:
+--   /run QuestPlateSettings = nil
+-- And then /reload your ui
 QuestPlateSettings = {
     AnchorPoint = 'RIGHT', -- Point of icon to anchor to nameplate (CENTER, LEFT, RIGHT, TOP, BOTTOM)
     RelativeTo = 'LEFT',   -- Point of nameplate to anchor icon to (CENTER, LEFT, RIGHT, TOP, BOTTOM)
@@ -8,7 +17,12 @@ QuestPlateSettings = {
     OffsetY = 0,           -- Vertical offset for icon
     IconScale = 1,         -- Scale for icon
 }
+-- Uncomment these lines if you want to enable them, or set to 0 to turn them off
+-- SetCVar('showQuestUnitCircles', 1) -- Enables subtle glow under quest mobs
+-- SetCVar('UnitNameFriendlySpecialNPCName', 1) -- Show name for quest objectives, even out of range of nameplates
 
+-- END OF SETTINGS
+--------------------
 local addonName, addon = ...
 local E = addon:Eve()
 
