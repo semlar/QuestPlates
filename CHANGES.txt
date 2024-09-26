@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Version 2.0.0-------------------------------------------------------------------
+#### Version 11.0.2-------------------------------------------------------------------
 
 - Fixed - Resolved an issue where `TooltipUtil.SurfaceArgs` was called without proper checks, leading to Lua errors
 - Fixed - Corrected quest tracking when using the `QUEST_ACCEPTED`, `QUEST_REMOVED`, and `QUEST_WATCH_LIST_CHANGED` events
