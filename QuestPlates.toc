@@ -4,5 +4,6 @@
 ## Version: 11.0.2
 ## Author: Semlar, DonnieDice
 ## SavedVariables: QuestPlateSettings
+## IconTexture: Interface\AddOns\QuestPlates\images\icon
 semlib\semlib.xml
 QuestPlates.lua
