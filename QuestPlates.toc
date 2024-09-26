@@ -5,5 +5,12 @@
 ## Author: Semlar, DonnieDice
 ## SavedVariables: QuestPlateSettings
 ## IconTexture: Interface\AddOns\QuestPlates\images\icon
+
+## X-Category: UI Media, Questing & Leveling, Audio & Video, Miscellaneous
+## X-Website: https://github.com/donniedice/QuestPlates
+## X-Curse-Project-ID: 1110009
+## X-Wago-ID: 
+## X-WoWI-ID: 
+
 semlib\semlib.xml
 QuestPlates.lua
