@@ -1,1 +1,1 @@
-- Added - [.pkgmeta]
+- Fixed - Package as - [.pkgmeta]
