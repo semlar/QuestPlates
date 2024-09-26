@@ -1,3 +1,1 @@
-- Added - New Folder - [/docs]
-- Added - changelog.txt - [/docs]
-- Moved - [CHANGES.md] - [/docs]
+- Added - [.pkgmeta]
