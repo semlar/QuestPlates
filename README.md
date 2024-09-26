@@ -30,14 +30,12 @@ To customize icon position and size, use the following commands:
 ---
 
 ## Compatibility
-- **Retail (Dragonflight)**
-- **Classic WoW**
-- **Classic Cataclysm**
+- **Retail (The War Within)**
 
 ---
 
 ## Installation
-1. Download the addon from [CurseForge](https://www.curseforge.com/wow/addons/questplates).
+1. Download the addon from [CurseForge](https://legacy.curseforge.com/wow/addons/questplates-tww).
 2. Extract the downloaded file into the appropriate World of Warcraft AddOns directory:
    - For **Dragonflight**: `World of Warcraft/_retail_/Interface/AddOns`
    - For **Classic Cataclysm**: `World of Warcraft/_classic_/Interface/AddOns`
