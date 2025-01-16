@@ -1,7 +1,7 @@
-## Interface: 110002, 110005
+## Interface: 110007
 ## Title: QuestPlates
 ## Notes: Adds quest progress to nameplates
-## Version: v5.4.5
+## Version: v5.4.6
 ## Author: Semlar, DonnieDice
 ## SavedVariables: QuestPlateSettings
 ## IconTexture: Interface\AddOns\QuestPlates\images\icon

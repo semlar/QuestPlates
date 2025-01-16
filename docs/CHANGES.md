@@ -1,1 +1,1 @@
-- Fixed - Package as - [.pkgmeta]
+- Updated - ToC for _retail_ - [ToC.110007]
