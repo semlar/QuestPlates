@@ -1,1 +1,2 @@
-- Updated - ToC for _retail_ - [ToC.110007]
+- Updated - Added note about Semlar - [README.md] 
+- Updated - Added color to AddOn Menu Title - [QuestPlates.toc]

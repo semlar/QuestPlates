@@ -1,9 +1,19 @@
+Certainly! Here's an enhanced version of your README with the requested updates and note about the original creator:
+
+---
+
 [![](https://img.shields.io/static/v1?label=Donate&message=CashApp&color=brightgreen)](https://bit.ly/3fyxxSU)
 
 # QuestPlates (Fork)
 
+## Note
+**Original Creator:** The original version of this addon was created by Semlar.  
+**Permissions:** I do not have permissions to publish this onto CurseForge, and the original creator is currently AWOL. Despite reaching out, I have been unable to contact them. This is a fork of their work, with updates and improvements made where necessary.
+
+---
+
 ## Overview
-**QuestPlates** is an addon for World of Warcraft that enhances nameplates by displaying quest objectives directly on enemy health bars. This fork builds upon Simlar’s original addon with performance improvements and updated compatibility for modern WoW expansions.
+**QuestPlates** is an addon for World of Warcraft that enhances nameplates by displaying quest objectives directly on enemy health bars. This fork builds upon Semlar’s original addon with performance improvements and updated compatibility for the **The War Within** expansion.
 
 ---
 
@@ -19,13 +29,19 @@
 To customize icon position and size, use the following commands:
 
 - Move the quest icon from the left to the right side of the nameplate:
-  `" /run QuestPlateSettings.AnchorPoint = 'LEFT'; QuestPlateSettings.RelativeTo = 'RIGHT'; ReloadUI() "`
+  ```bash
+  /run QuestPlateSettings.AnchorPoint = 'LEFT'; QuestPlateSettings.RelativeTo = 'RIGHT'; ReloadUI()
+  ```
 
 - Adjust the X (horizontal) and Y (vertical) offsets:
-  `" /run QuestPlateSettings.OffsetX = -10; QuestPlateSettings.OffsetY = 5; ReloadUI() "`
+  ```bash
+  /run QuestPlateSettings.OffsetX = -10; QuestPlateSettings.OffsetY = 5; ReloadUI()
+  ```
 
 - Reset settings to default:
-  `" /run QuestPlateSettings = nil; ReloadUI() "`
+  ```bash
+  /run QuestPlateSettings = nil; ReloadUI()
+  ```
 
 ---
 
@@ -37,7 +53,7 @@ To customize icon position and size, use the following commands:
 ## Installation
 1. Download the addon from [CurseForge](https://legacy.curseforge.com/wow/addons/questplates-tww).
 2. Extract the downloaded file into the appropriate World of Warcraft AddOns directory:
-   - For **Dragonflight**: `World of Warcraft/_retail_/Interface/AddOns`
+   - For **The War Within**: `World of Warcraft/_retail_/Interface/AddOns`
    - For **Classic Cataclysm**: `World of Warcraft/_classic_/Interface/AddOns`
    - For **Classic WoW**: `World of Warcraft/_classic_era_/Interface/AddOns`
 3. Restart World of Warcraft and enable the addon in the AddOns menu.
