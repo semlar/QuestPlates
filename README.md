@@ -1,7 +1,3 @@
-Certainly! Here's an enhanced version of your README with the requested updates and note about the original creator:
-
----
-
 [![](https://img.shields.io/static/v1?label=Donate&message=CashApp&color=brightgreen)](https://bit.ly/3fyxxSU)
 
 # QuestPlates (Fork)
