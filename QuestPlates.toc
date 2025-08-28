@@ -1,8 +1,17 @@
-## Interface: 100002
-## Title: QuestPlates
-## Notes: Adds quest progress to nameplates
-## Version: 10.0.2.1
-## Author: Semlar
+## Interface: 110105
+## Title: - |cff58be81Q|r|cffffffffuest|r|cff58be81P|r|cfffffffflates|r
+## Notes: Adds quest progress to nameplates.|n|r   |cff58be81By Semlar, DonnieDice|r
+## Version: v5.4.10
+## Author: Semlar, DonnieDice
+## Email: joseph@cranberriestudios.com
 ## SavedVariables: QuestPlateSettings
-semlib\semlib.xml
+## IconTexture: Interface\AddOns\QuestPlates\images\icon
+
+## X-Category: UI Media, Questing & Leveling, Audio & Video, Miscellaneous
+## X-Website: https://github.com/donniedice/QuestPlates
+## X-Curse-Project-ID: 1110009
+## X-Wago-ID: 
+## X-WoWI-ID: 
+
+semlib/semlib.xml
 QuestPlates.lua
