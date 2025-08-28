@@ -1,77 +1,38 @@
-# QuestPlates (Archived) - Continued as SQP (Simple Quest Plates)
+# QuestPlates (Archived) - Continued as RGX | Simple Quest Plates!
 
-> **Note:** This addon has been continued as **SQP (Simple Quest Plates)**. You can find the new addon on [CurseForge](<https://www.curseforge.com/wow/addons/simple-quest-plates>).
-
----
-
-> **Note:** This is a fork of the original QuestPlates addon by Semlar. I do not have permissions to publish this onto CurseForge, and the original creator is currently AWOL. Despite reaching out, I have been unable to contact them. This is a fork of their work, with updates and improvements made where necessary.
+> **Note:** This addon is no longer maintained and has been replaced by **RGX | Simple Quest Plates!**. Please download the new addon for the latest features, updates, and support.
 
 ---
 
-## Overview
-**QuestPlates** is an addon for World of Warcraft that enhances nameplates by displaying quest objectives directly on enemy health bars. This fork builds upon Semlar’s original addon with performance improvements and updated compatibility for the **The War Within** expansion.
+## 🎯 RGX | Simple Quest Plates!
+
+[![](https://img.shields.io/static/v1?label=CurseForge&message=Download&color=orange&logo=curseforge)](https://www.curseforge.com/wow/addons/rgx-simplequestplates)
+[![](https://img.shields.io/static/v1?label=GitHub&message=Source&color=blue&logo=github)](https://github.com/DonnieDice/RGX_SimpleQuestPlates)
+
+**SQP | Simple Quest Plates!** is a professional World of Warcraft addon that displays quest progress icons directly on enemy nameplates. Know at a glance which enemies you need to defeat for your quests, how many items they drop, and your overall progress - all without cluttering your interface. As part of the RGX Mods collection, it delivers premium quality with extensive customization options, multi-language support, and seamless integration.
+
+### 🌟 Join the RGX Mods Community!
+
+[![](https://img.shields.io/discord/806673994224107520?logo=discord&label=Discord)](https://discord.gg/realmgx)
+
+Join the RealmGX Discord for addon support, feature requests, beta testing, and a community of WoW players.
+
+### ✨ Features
+
+*   **Quest Icons:** Display quest progress directly on enemy nameplates.
+*   **Fully Customizable:** Adjust colors, fonts, sizes, and positions.
+*   **Item Priority:** Shows item counts before kill counts when both are needed.
+*   **Multi-Language:** Supports English, German, Spanish, French, and Russian.
+*   **Lightweight:** Minimal performance impact with efficient caching.
+*   **And much more!**
+
+### 🚀 Quick Start
+
+1.  Install **RGX | Simple Quest Plates!** from your preferred platform.
+2.  Launch World of Warcraft.
+3.  Type `/sqp` to open the options panel.
+4.  Customize your quest display preferences.
 
 ---
 
-## Features
-- **Quest Objectives on Nameplates:** Displays the remaining mobs to kill or items to collect directly on the nameplate.
-- **Customizable Settings:** Modify the position, size, and appearance of quest icons using simple commands.
-- **Compatibility with Other Nameplate Addons:** Works seamlessly with TidyPlates, KuiNameplates, and Blizzard default nameplates.
-
----
-
-## Usage
-
-To customize icon position and size, you can use the following commands. Press `Enter` to open the chat window, type or paste the command, and press `Enter` again to run it.
-
-- Move the quest icon from the left to the right side of the nameplate:
-  ```bash
-  /run QuestPlateSettings.AnchorPoint = 'LEFT'; QuestPlateSettings.RelativeTo = 'RIGHT'; ReloadUI()
-  ```
-
-- Adjust the X (horizontal) and Y (vertical) offsets:
-  ```bash
-  /run QuestPlateSettings.OffsetX = -10; QuestPlateSettings.OffsetY = 5; ReloadUI()
-  ```
-
-- Reset settings to default:
-  ```bash
-  /run QuestPlateSettings = nil; ReloadUI()
-  ```
-
----
-
-## Compatibility
-- **Retail (The War Within)**
-
----
-
-## Installation
-1. Download the addon from [CurseForge](https://legacy.curseforge.com/wow/addons/questplates-tww).
-2. Extract the downloaded file into the appropriate World of Warcraft AddOns directory:
-   - For **The War Within**: `World of Warcraft/_retail_/Interface/AddOns`
-   - **Note:** You can find your World of Warcraft installation directory by opening the Battle.net launcher, selecting World of Warcraft, clicking on the gear icon next to the "Play" button, and selecting "Show in Explorer" (Windows) or "Reveal in Finder" (Mac).
-3. Restart World of Warcraft and enable the addon in the AddOns menu.
-
----
-
-## Support the Project
-
-### ☕️ Buy Me a Coffee
-If you enjoy this addon and would like to support its development, consider buying me a coffee. Your contributions help me maintain and improve this project!
-
-[![Buy Me a Coffee](https://img.shields.io/badge/☕️-Buy%20Me%20a%20Coffee-orange?style=flat-square&logo=buy-me-a-coffee)](https://www.buymeacoffee.com/donniedice)
-
----
-
-## Stay Connected
-
-### 💸 Support:
-[![Donate via CashApp](https://img.shields.io/static/v1?label=Donate&message=CashApp&color=brightgreen)](https://cash.app/$DonnieDice)
-
-### 💬 Follow:
-- Follow me on [GitHub](https://github.com/donniedice)
-
-### ⭐️ Show Your Support:
-- Star this project on [GitHub](https://github.com/donniedice/QuestPlates) ⭐️
-- Share it with your friends and guildmates 📢
+This repository is archived and no longer maintained. Please visit the new repository for the latest updates.
