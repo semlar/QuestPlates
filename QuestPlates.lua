@@ -53,7 +53,7 @@ do
 			for k, task in pairs(C_TaskQuest.GetQuestsForPlayerByMapID(uiMapID) or {}) do
 				if task.inProgress then
 					-- track active world quests
-					local questID = task.questId
+					local questID = task.questID
 					local questName = C_TaskQuest.GetQuestInfoByQuestID(questID)
 					if questName then
 						-- print(k, questID, questName)
@@ -110,7 +110,6 @@ function GetQuestProgress(unitID)
 	local questID
 	for i = 3, #tooltipData.lines do
 		local line = tooltipData.lines[i]
-		TooltipUtil.SurfaceArgs(line)
 
 		if line.type == 17 and line.id then -- Tooltip line is a quest header..?
 			--if not text then return end
