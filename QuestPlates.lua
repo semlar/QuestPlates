@@ -6,6 +6,8 @@
 --   /run QuestPlateSettings.OffsetY = -10
 -- To move the icon from the left to the right of the nameplate, you can type this:
 --   /run QuestPlateSettings.AnchorPoint = 'LEFT'; QuestPlateSettings.RelativeTo = 'RIGHT'
+-- To change to an alternative icon style type this:
+--   /run QuestPlateSettings.IconStyle = 1
 
 -- After changing your settings, you can type /reload to save and apply them
 -- If you wish to wipe out any changes you've made and return to the default settings, you can type:
@@ -18,6 +20,7 @@ QuestPlateSettings = {
 	OffsetX = 0, -- Horizontal offset for icon (from anchor point)
 	OffsetY = 0, -- Vertical offset for icon
 	IconScale = 1, -- Scale for icon
+	IconStyle = 0, -- Change the style of the icon (Options: 0, 1)
 }
 
 -- Uncomment these lines if you want to enable them, or set to 0 to turn them off
@@ -172,7 +175,18 @@ function E:OnNewPlate(f, plate)
 	
 	local icon = frame:CreateTexture(nil, nil, nil, 0)
 	icon:SetSize(28, 22)
-	icon:SetTexture('Interface/QuestFrame/AutoQuest-Parts')
+	
+	if QuestPlateSettings.IconStyle == 0 then
+		icon:SetTexture('Interface/QuestFrame/AutoQuest-Parts')
+	elseif QuestPlateSettings.IconStyle == 1 then 
+		icon:SetVertexColor(0,0,0,0.5)
+		icon:SetTexture('Interface/Tooltips/UI-Tooltip-Background')
+		local mask = frame:CreateMaskTexture()
+		mask:SetTexture([[Interface\CHARACTERFRAME\TempPortraitAlphaMask]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+		mask:SetAllPoints(icon)
+		icon:AddMaskTexture(mask)
+	end
+	
 	icon:SetTexCoord(0.30273438, 0.41992188, 0.015625, 0.953125)
 	icon:SetPoint(QuestPlateSettings.AnchorPoint or 'RIGHT', frame, QuestPlateSettings.RelativeTo or 'LEFT', (QuestPlateSettings.OffsetX or 0) / (QuestPlateSettings.IconScale or 1), (QuestPlateSettings.OffsetY or 0) / (QuestPlateSettings.IconScale or 1))
 	frame:SetScale(QuestPlateSettings.IconScale or 1)
