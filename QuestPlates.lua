@@ -388,3 +388,152 @@ function E:ADDON_LOADED(loadedAddon)
 		self:UnregisterEvent("ADDON_LOADED")
 	end
 end
+
+--------------------
+-- OPTIONS PANEL
+--------------------
+
+local function CreateOptionsPanel()
+	local category = Settings.RegisterVerticalLayoutCategory("QuestPlates")
+
+	local positionOptions = {
+		{ label = "Left", value = "LEFT" },
+		{ label = "Right", value = "RIGHT" },
+		{ label = "Top", value = "TOP" },
+		{ label = "Bottom", value = "BOTTOM" },
+		{ label = "Center", value = "CENTER" },
+	}
+
+	local function GetPositionOptions()
+		local container = Settings.CreateControlTextContainer()
+		for _, opt in ipairs(positionOptions) do
+			container:Add(opt.value, opt.label)
+		end
+		return container:GetData()
+	end
+
+	-- Icon Anchor Point
+	do
+		local variable = "AnchorPoint"
+		local name = "Icon Anchor Point"
+		local tooltip = "Which point of the icon to anchor"
+		local defaultValue = "LEFT"
+
+		local function GetValue()
+			return QuestPlateSettings.AnchorPoint or defaultValue
+		end
+
+		local function SetValue(value)
+			QuestPlateSettings.AnchorPoint = value
+			RefreshAllIcons()
+		end
+
+		local setting = Settings.RegisterProxySetting(category, variable, Settings.VarType.String, name, defaultValue, GetValue, SetValue)
+		Settings.CreateDropdown(category, setting, GetPositionOptions, tooltip)
+	end
+
+	-- Relative To
+	do
+		local variable = "RelativeTo"
+		local name = "Nameplate Anchor Point"
+		local tooltip = "Which point of the nameplate to attach the icon to"
+		local defaultValue = "RIGHT"
+
+		local function GetValue()
+			return QuestPlateSettings.RelativeTo or defaultValue
+		end
+
+		local function SetValue(value)
+			QuestPlateSettings.RelativeTo = value
+			RefreshAllIcons()
+		end
+
+		local setting = Settings.RegisterProxySetting(category, variable, Settings.VarType.String, name, defaultValue, GetValue, SetValue)
+		Settings.CreateDropdown(category, setting, GetPositionOptions, tooltip)
+	end
+
+	-- Offset X
+	do
+		local variable = "OffsetX"
+		local name = "Horizontal Offset"
+		local tooltip = "Horizontal offset from anchor point"
+		local defaultValue = 0
+		local minValue = -50
+		local maxValue = 50
+		local step = 1
+
+		local function GetValue()
+			return QuestPlateSettings.OffsetX or defaultValue
+		end
+
+		local function SetValue(value)
+			QuestPlateSettings.OffsetX = value
+			RefreshAllIcons()
+		end
+
+		local setting = Settings.RegisterProxySetting(category, variable, Settings.VarType.Number, name, defaultValue, GetValue, SetValue)
+		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
+		Settings.CreateSlider(category, setting, options, tooltip)
+	end
+
+	-- Offset Y
+	do
+		local variable = "OffsetY"
+		local name = "Vertical Offset"
+		local tooltip = "Vertical offset from anchor point"
+		local defaultValue = 0
+		local minValue = -50
+		local maxValue = 50
+		local step = 1
+
+		local function GetValue()
+			return QuestPlateSettings.OffsetY or defaultValue
+		end
+
+		local function SetValue(value)
+			QuestPlateSettings.OffsetY = value
+			RefreshAllIcons()
+		end
+
+		local setting = Settings.RegisterProxySetting(category, variable, Settings.VarType.Number, name, defaultValue, GetValue, SetValue)
+		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
+		Settings.CreateSlider(category, setting, options, tooltip)
+	end
+
+	-- Icon Scale
+	do
+		local variable = "IconScale"
+		local name = "Icon Scale"
+		local tooltip = "Scale of the quest icon"
+		local defaultValue = 1
+		local minValue = 0.5
+		local maxValue = 2.0
+		local step = 0.1
+
+		local function GetValue()
+			return QuestPlateSettings.IconScale or defaultValue
+		end
+
+		local function SetValue(value)
+			QuestPlateSettings.IconScale = value
+			RefreshAllIcons()
+		end
+
+		local setting = Settings.RegisterProxySetting(category, variable, Settings.VarType.Number, name, defaultValue, GetValue, SetValue)
+		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, function(value) return string.format("%.1f", value) end)
+		Settings.CreateSlider(category, setting, options, tooltip)
+	end
+
+	Settings.RegisterAddOnCategory(category)
+end
+
+-- Create options panel after player login
+local optionsFrame = CreateFrame("Frame")
+optionsFrame:RegisterEvent("PLAYER_LOGIN")
+optionsFrame:SetScript("OnEvent", function(self, event)
+	CreateOptionsPanel()
+	self:UnregisterEvent("PLAYER_LOGIN")
+end)
