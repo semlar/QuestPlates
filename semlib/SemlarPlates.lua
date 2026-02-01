@@ -8,6 +8,14 @@ local Nameplates = {} -- [plate] = f, holds all nameplate frames
 local ActiveNameplates = {} -- [plate] = f, only stores currently visible nameplates
 local GUIDs = {} -- [guid] = plate
 
+local _UnitGUID = UnitGUID
+local UnitGUID = function(unit)
+  local guid = _UnitGUID(unit)
+  if guid and not issecretvalue(guid) then
+    return guid
+  end
+end
+
 function addon:GetActiveNameplates()
 	return ActiveNameplates
 end
