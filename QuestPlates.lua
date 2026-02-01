@@ -13,8 +13,8 @@
 -- And then /reload your ui
 
 QuestPlateSettings = {
-	AnchorPoint = 'RIGHT', -- Point of icon to anchor to nameplate (CENTER, LEFT, RIGHT, TOP, BOTTOM)
-	RelativeTo = 'LEFT', -- Point of nameplate to anchor icon to (CENTER, LEFT, RIGHT, TOP, BOTTOM)
+	AnchorPoint = 'LEFT', -- Point of icon to anchor to nameplate (CENTER, LEFT, RIGHT, TOP, BOTTOM)
+	RelativeTo = 'RIGHT', -- Point of nameplate to anchor icon to (CENTER, LEFT, RIGHT, TOP, BOTTOM)
 	OffsetX = 0, -- Horizontal offset for icon (from anchor point)
 	OffsetY = 0, -- Vertical offset for icon
 	IconScale = 1, -- Scale for icon
@@ -50,10 +50,10 @@ do
 		-- local areaID = GetCurrentMapAreaID()
 		local uiMapID = C_Map.GetBestMapForUnit('player')
 		if uiMapID then
-			for k, task in pairs(C_TaskQuest.GetQuestsForPlayerByMapID(uiMapID) or {}) do
-				if task.inProgress then
-					-- track active world quests
-					local questID = task.questID
+			for k, task in pairs(C_TaskQuest.GetQuestsOnMap(uiMapID) or {}) do
+				-- track active world quests
+				local questID = task.questID
+				if questID and C_TaskQuest.IsActive(questID) then
 					local questName = C_TaskQuest.GetQuestInfoByQuestID(questID)
 					if questName then
 						-- print(k, questID, questName)
@@ -249,7 +249,7 @@ local function UpdateQuestIcon(plate, unitID)
 	if not Q then return end
 	
 	local scenarioName, currentStage, numStages, flags, _, _, _, xp, money, scenarioType, _, textureKitID = C_Scenario.GetInfo()
-	local inChallengeMode = (scenarioType == LE_SCENARIO_TYPE_CHALLENGE_MODE)
+	local inChallengeMode = (scenarioType == (Enum.LFGDungeonScenarioType and Enum.LFGDungeonScenarioType.ChallengeMode or LE_SCENARIO_TYPE_CHALLENGE_MODE))
 	local guid = UnitGUID(unitID)
 	if inChallengeMode and guid then -- C_MythicPlus.IsMythicPlusActive() and guid then
 		Q:Hide()
@@ -290,7 +290,7 @@ local function UpdateQuestIcon(plate, unitID)
 			else
 				local info = C_QuestLog.GetInfo(questLogIndex)
 				if info then
-					for i = 1, GetNumQuestLeaderBoards(questLogIndex) or 0 do
+					for i = 1, C_QuestLog.GetNumQuestObjectives(info.questID) or 0 do
 						local text, objectiveType, finished = GetQuestObjectiveInfo(info.questID, i, false)
 						if not finished and (objectiveType == 'item' or objectiveType == 'object') then
 							Q.lootIcon:Show()
@@ -333,7 +333,7 @@ local function CacheQuestIndexes()
 		local info = C_QuestLog.GetInfo(i)		
 		if info and not info.isHeader then
 			QuestLogIndex[info.title] = i
-			for objectiveID = 1, GetNumQuestLeaderBoards(i) or 0 do
+			for objectiveID = 1, C_QuestLog.GetNumQuestObjectives(info.questID) or 0 do
 				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(info.questID, objectiveID, false)
 				if objectiveText then
 					QuestObjectiveStrings[ info.title .. objectiveText ] = {info.questID, objectiveID}
@@ -371,16 +371,20 @@ function E:PLAYER_ENTERING_WORLD()
 end
 
 -- Reanchor any existing nameplate icons after settings load
+local function RefreshAllIcons()
+	for plate, f in pairs(addon:GetAllNameplates()) do
+		local frame = QuestPlates[plate]
+		if frame then
+			frame.jellybean:ClearAllPoints()
+			frame.jellybean:SetPoint(QuestPlateSettings.AnchorPoint or 'LEFT', frame, QuestPlateSettings.RelativeTo or 'RIGHT', (QuestPlateSettings.OffsetX or 0) / (QuestPlateSettings.IconScale or 1), (QuestPlateSettings.OffsetY or 0) / (QuestPlateSettings.IconScale or 1))
+			frame:SetScale(QuestPlateSettings.IconScale or 1)
+		end
+	end
+end
+
 function E:ADDON_LOADED(loadedAddon)
 	if loadedAddon == addonName then
-		for plate, f in pairs(addon:GetAllNameplates()) do
-			local frame = QuestPlates[plate]
-			if frame then
-				frame.jellybean:ClearAllPoints()
-				frame.jellybean:SetPoint(QuestPlateSettings.AnchorPoint or 'RIGHT', frame, QuestPlateSettings.RelativeTo or 'LEFT', (QuestPlateSettings.OffsetX or 0) / (QuestPlateSettings.IconScale or 1), (QuestPlateSettings.OffsetY or 0) / (QuestPlateSettings.IconScale or 1))
-				frame:SetScale(QuestPlateSettings.IconScale or 1)
-			end
-		end	
+		RefreshAllIcons()
 		self:UnregisterEvent("ADDON_LOADED")
 	end
 end
